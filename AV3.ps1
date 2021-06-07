@@ -59,3 +59,17 @@ function Generate-HTML {
 
     ConvertTo-HTML -Body $Body -Title $Title | Out-File $File
 }
+
+function Get-PC-Details{
+    $PCName = Get-PC-Name
+    $ServicesRunning = Get-Services -Status 'Running' -Quantity 5 -Properties Name,DisplayName,ServiceName,Status
+    $ServicesStopped = Get-Services -Status 'Stopped' -Quantity 5 -Properties Name,DisplayName,ServiceName,Status
+    $OSInfo = Get-OS-Info -Properties Version,Caption,BuildNumber,Manufacturer
+    $BiosInfo = Get-BIOS-Info -Properties Name,Manufacturer,SerialNumber,Version,ReleaseDate
+    $MemoryInfo = Get-Mem-Info -Properties Name,CreationClassName,Capacity,Speed
+    $DiskInfo = Get-Disk-Info -Properties DiskNumber,PartitionStyle,BusType,Model
+
+    Generate-HTML -Body "$PCName $ServicesRunning $ServicesStopped $OSInfo $BiosInfo $MemoryInfo $DiskInfo" -Title "AV3" -File ./AV3.html
+}
+
+Get-PC-Details
