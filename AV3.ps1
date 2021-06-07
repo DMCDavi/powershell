@@ -21,3 +21,12 @@ function Get-OS-Info {
 
     Get-CimInstance -ClassName Win32_OperatingSystem | ConvertTo-HTML -Property $Properties -Fragment
 }
+
+function Get-BIOS-Info {
+
+    param(
+        $Properties
+    )
+
+    Get-CimInstance -ClassName Win32_BIOS | ConvertTo-HTML -Property $Properties -Fragment
+}
