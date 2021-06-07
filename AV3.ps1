@@ -68,8 +68,9 @@ function Get-PC-Details{
     $BiosInfo = Get-BIOS-Info -Properties Name,Manufacturer,SerialNumber,Version,ReleaseDate
     $MemoryInfo = Get-Mem-Info -Properties Name,CreationClassName,Capacity,Speed
     $DiskInfo = Get-Disk-Info -Properties DiskNumber,PartitionStyle,BusType,Model
+    $CreatedAt = Get-Date
 
-    Generate-HTML -Body "$PCName $ServicesRunning $ServicesStopped $OSInfo $BiosInfo $MemoryInfo $DiskInfo" -Title "AV3" -File ./AV3.html
+    Generate-HTML -Body "$PCName $ServicesRunning $ServicesStopped $OSInfo $BiosInfo $MemoryInfo $DiskInfo <b>Criado em: </b>$CreatedAt" -Title "AV3" -File ./AV3.html
 }
 
 Get-PC-Details
