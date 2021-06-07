@@ -30,3 +30,12 @@ function Get-BIOS-Info {
 
     Get-CimInstance -ClassName Win32_BIOS | ConvertTo-HTML -Property $Properties -Fragment
 }
+
+function Get-Mem-Info {
+
+    param(
+        $Properties
+    )
+
+    Get-CimInstance -ClassName Win32_PhysicalMemory | ConvertTo-HTML -Property $Properties -Fragment
+}
