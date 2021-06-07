@@ -48,3 +48,14 @@ function Get-Disk-Info {
 
     Get-Disk | ConvertTo-HTML -Property $Properties -Fragment
 }
+
+function Generate-HTML {
+
+    param(
+        [string] $Title,
+        [string] $Body,
+        $File
+    )
+
+    ConvertTo-HTML -Body $Body -Title $Title | Out-File $File
+}
