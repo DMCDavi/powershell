@@ -39,3 +39,12 @@ function Get-Mem-Info {
 
     Get-CimInstance -ClassName Win32_PhysicalMemory | ConvertTo-HTML -Property $Properties -Fragment
 }
+
+function Get-Disk-Info {
+
+    param(
+        $Properties
+    )
+
+    Get-Disk | ConvertTo-HTML -Property $Properties -Fragment
+}
