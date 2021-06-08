@@ -6,7 +6,7 @@ function Get-PC-Name {
 function Get-Services {
 
     param(
-        [string] $Status,
+        [string] $StatusAlias,
         [int] $Quantity,
         $Properties
     )
@@ -55,10 +55,11 @@ function Generate-HTML {
     param(
         [string] $Title,
         [string] $Body,
+        [string] $Head,
         $File
     )
 
-    ConvertTo-HTML -Body $Body -Title $Title | Out-File $File
+    ConvertTo-HTML -Head $Head -Body $Body -Title $Title | Out-File $File
 }
 
 function Get-PC-Details{
@@ -71,6 +72,55 @@ function Get-PC-Details{
     $DiskInfo = Get-Disk-Info -Properties DiskNumber,PartitionStyle,BusType,Model
     $CreatedAt = Get-Date
 
-    Generate-HTML -Body "$PCName $ServicesRunning $ServicesStopped $OSInfo $BiosInfo $MemoryInfo $DiskInfo <b>Criado em: </b>$CreatedAt" -Title "AV3" -File ./AV3.html
+    $Style = @"
+<style>
+      body {
+        background-color: rgb(62, 65, 77);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        padding-left: 2%;
+      }
+      th {
+        background-color: cadetblue;
+      }
+      tr {
+        background-color: lightgray;
+      }
+      table {
+        margin-bottom: 10px;
+      }
+      p{
+          color: white;
+      }
+      h1{
+          font-size: large;
+          color: white;
+      }
+      h2{
+          font-size: medium;
+          color: white;
+      }
+    </style>
+"@
+
+$Body = @"
+<h2>Computer Name</h2>
+$PCName 
+<h2>Services Information</h2>
+$ServicesRunning
+ $ServicesStopped
+ <h2>OS Information</h2>
+  $OSInfo
+  <h2>BIOS Information</h2>
+   $BiosInfo
+   <h2>Memory Information</h2>
+    $MemoryInfo
+    <h2>Disk Information</h2>
+     $DiskInfo
+     <p> <b>Created at: </b>$CreatedAt </p>
+"@
+
+    Generate-HTML -Head $Style -Body $Body -Title "AV3" -File ./AV3.html
 }
+
 Export-ModuleMember -Function Get-PC-Details
