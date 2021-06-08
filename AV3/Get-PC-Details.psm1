@@ -75,7 +75,7 @@ function Get-PC-Details{
     $OSInfo = Get-OS-Info -Properties Version,Caption,BuildNumber,Manufacturer
     $BiosInfo = Get-BIOS-Info -Properties Name,Manufacturer,SerialNumber,Version,ReleaseDate
     $MemoryInfo = Get-Mem-Info -Properties Name,CreationClassName,Capacity,Speed
-    $DiskInfo = Get-Disk-Info -Properties DiskNumber,PartitionStyle,BusType,Model
+    $DiskInfo = Get-Disk-Info -Properties DiskNumber,PartitionStyle,Size,BusType,Model
     $CreatedAt = Get-Date
 
     $Style = @"
